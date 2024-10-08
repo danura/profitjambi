@@ -1,0 +1,8 @@
+izin mas adit adapun tambahan dari team management paal 10 antara lain :
+1. Data asuransi kendaraan masa berlaku dan asuransi nya
+2. Data reminder habis stnk 
+3. Kasih ruang utk data appraisal kendaraam nanti diisi sama appraisal pic cbg. ( ini di letakan di dalam view detail)
+4. Catatan CR7 setelah perbaikan
+5. Text berjalan yg bisa diubah admin, cth nya utk ucapin ultah dll.
+6. Price list new cars
+7. progress service dari GR & BP

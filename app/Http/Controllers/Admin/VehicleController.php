@@ -93,9 +93,10 @@ class VehicleController extends Controller
             $lastid = 0;
             foreach ($posts as $post)
             {
-				$btnView = '<button class="btn btn-primary btn-sm" type="button" onclick="getDetailUnit('.$post->fu_id.')"><i class="fas fa-eye"></i> Detail</button>';
-                $btnDel = '<button class="btn btn-danger btn-sm" type="button" onclick="hapusUnit('.$post->fu_id.')"><i class="fas fa-trash"></i> Hapus</button>';
-				
+				$btnView = '<a class="btn btn-primary btn-sm" type="button" onclick="getDetailUnit('.$post->fu_id.')"><i class="fas fa-eye"></i> Detail</button>';
+                //$btnDel = '<a class="btn btn-danger btn-sm" type="button" onclick="hapusUnit('.$post->fu_id.')"><i class="fas fa-trash"></i> Hapus</button>';
+				///.'&nbsp;'.$btnDel
+                
 				$start++;
                 if($post->usiaunit > 3) $usiaunit = "<span class='badge bg-danger w-100'>".$post->usiaunit." Tahun</span>";
                 else $usiaunit = "<span class='badge bg-info w-100'>".$post->usiaunit." Tahun</span>";
@@ -108,7 +109,7 @@ class VehicleController extends Controller
                 $nestedData['tglbeli'] =$post->fu_tgl_bp."<br>".$usiaunit;
                 $nestedData['tglbpkb'] =$post->fu_tgl_bpkb;
                 $nestedData['tglstnk'] =$post->fu_tgl_stnk;
-				$nestedData['action'] = $btnView.'&nbsp;'.$btnDel;
+				$nestedData['action'] = $btnView;
                 $data[] = $nestedData;
             }
         }

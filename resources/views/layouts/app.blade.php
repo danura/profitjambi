@@ -57,7 +57,7 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
             <div class="sidebar-content">
                 <ul class="nav nav-secondary">
-                    <li class="nav-item ">
+                    <li class="nav-item {{ Request::is('admin/dashboard*') ? ' active' : '' }}">
                         <a href="{{ route('dashboard') }}">
                             <i class="fas fa-home"></i>
                             <p>Dashboard</p>
@@ -96,15 +96,15 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ Request::is('admin/vehicle*') ? ' active' : '' }}">
                         <a href="{{ route('vehicle') }}">
                             <i class="fas fa-car"></i>
                             <p>Data Unit</p>
-                            <span class="badge badge-success">4</span>
+                          
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="../../../documentation/index.html">
+                    <li class="nav-item {{ Request::is('admin/profill*') ? ' active' : '' }}">
+                        <a href="{{ route('profill') }}">
                             <i class="fas fa-file"></i>
                             <p>User Profile</p>
                            
@@ -250,28 +250,14 @@
         <footer class="footer">
             <div class="container-fluid d-flex justify-content-between">
                 <nav class="pull-left">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Agung Concern
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> Agung Toyota </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> Jambi II </a>
-                        </li>
-                    </ul>
+                    <marquee direction="left" onmouseover="this.stop()" onmouseout="this.start()">
+                        Selamat Ulang Tahun PT ADI SARANA TBK
+                    </marquee>
                 </nav>
                 <div class="copyright">
-                    2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                    <a href="#">ATJB2A</a>
+                    
                 </div>
-                <div>
-                    Distributed by
-                    <a target="_blank" href="#">MIS AT</a>.
-                </div>
+                
             </div>
         </footer>
     </div>

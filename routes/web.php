@@ -26,6 +26,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/vehicle/historysvc', [App\Http\Controllers\Admin\VehicleController::class, 'listHistService'])->name('histservice');
         Route::post('/vehicle/hapus/', [App\Http\Controllers\Admin\VehicleController::class, 'hapusdata'])->name('deletevehicle');
 
+        Route::get('/profill', [App\Http\Controllers\Admin\ProfillController::class, 'index'])->name('profill');
+        Route::post('/profill/store', [App\Http\Controllers\Admin\ProfillController::class, 'storedata'])->name('storeprofill');
+
         Route::get('/dropmodel', [App\Http\Controllers\Admin\VehicleController::class, 'getDataModelHaving'])->name('dropmodel');
         Route::get('/dropdowntype/{id}', [App\Http\Controllers\Admin\VehicleController::class, 'getDataTypeByModel'])->name('dropdowntype');
 

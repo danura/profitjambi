@@ -188,7 +188,7 @@ function hist_service(){
 		"searching": false,
 		"destroy": true,
 		stateSave: false,
-		pageLength: 5,
+		pageLength: 10,
 		"ajax":{
 				 "url": "{{ route('histservice') }}",
 				 "dataType": "json",

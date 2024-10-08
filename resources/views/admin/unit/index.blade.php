@@ -63,7 +63,7 @@
                                             <th>TGL BELI</th>
                                             <th>TGL BPKB</th>
                                             <th>TGL STNK</th>
-											
+											<th>ACT</th>
                                             <th></th>
                                         </tr>
                                     </thead>
