@@ -64,7 +64,7 @@
                                             <th>TGL BPKB</th>
                                             <th>TGL STNK</th>
 											<th>ACT</th>
-                                            <th></th>
+                                           
                                         </tr>
                                     </thead>
                                 </table>
@@ -242,10 +242,10 @@
     <script src="{{ asset('public/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('public/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
-     <script src="{{ asset('public/assets/vendor/datetimepicker/js/legacy.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/datetimepicker/js/legacy.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.time.js') }}"></script>
-        <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.date.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.date.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {

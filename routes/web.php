@@ -29,6 +29,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/profill', [App\Http\Controllers\Admin\ProfillController::class, 'index'])->name('profill');
         Route::post('/profill/store', [App\Http\Controllers\Admin\ProfillController::class, 'storedata'])->name('storeprofill');
 
+        Route::get('/bengkel', [App\Http\Controllers\Admin\GeneralServiceController::class, 'index'])->name('bengkel');
+        Route::post('/bengkel/list', [App\Http\Controllers\Admin\GeneralServiceController::class, 'listData'])->name('listbengkel');
+
         Route::get('/dropmodel', [App\Http\Controllers\Admin\VehicleController::class, 'getDataModelHaving'])->name('dropmodel');
         Route::get('/dropdowntype/{id}', [App\Http\Controllers\Admin\VehicleController::class, 'getDataTypeByModel'])->name('dropdowntype');
 

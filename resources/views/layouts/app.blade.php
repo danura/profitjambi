@@ -78,8 +78,8 @@
                         </a>
                         <div class="collapse" id="base">
                             <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="components/avatars.html">
+                                <li class="nav-item {{ Request::is('admin/bengkel*') ? ' active' : '' }}">
+                                    <a href="{{ route('bengkel') }}">
                                         <span class="sub-item">Reminder Service</span>
                                     </a>
                                 </li>
