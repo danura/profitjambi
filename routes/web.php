@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/bengkel', [App\Http\Controllers\Admin\GeneralServiceController::class, 'index'])->name('bengkel');
         Route::post('/bengkel/list', [App\Http\Controllers\Admin\GeneralServiceController::class, 'listData'])->name('listbengkel');
+        Route::post('/bengkel/prosesSync', [App\Http\Controllers\Admin\GeneralServiceController::class, 'proses_sinkron'])->name('updateSync');
 
         Route::get('/dropmodel', [App\Http\Controllers\Admin\VehicleController::class, 'getDataModelHaving'])->name('dropmodel');
         Route::get('/dropdowntype/{id}', [App\Http\Controllers\Admin\VehicleController::class, 'getDataTypeByModel'])->name('dropdowntype');

@@ -61,6 +61,33 @@
             </div>
         </div>
     </div>
+	
+	<div class="modal fade hide in" id="SyncModalData" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Konfirmasi </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="frmsyncdata">
+                    {{csrf_field()}}
+                    <input type="hidden" readonly id="fu_no_rangka" name="fu_no_rangka">
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <p id="titleWord">Apakah anda ingin melakukan sinkronisasi untuk unit ini ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnYes">Ya</button>
+                        <button type="button" class="btn btn-secondary" id="btnNo" data-bs-dismiss="modal">Tidak</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="{{ asset('public/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
@@ -73,7 +100,54 @@
     <script type="text/javascript">
         $(document).ready(function() {
             LoadComboAllModel();
+		
+			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $("#frmsyncdata").submit(function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    data: $('#frmsyncdata').serialize(),
+                    url: "{{URL('/admin/bengkel/prosesSync/')}}",
+                    type: "POST",
+                    dataType: 'json',
+					beforeSend: function(){
+						$("#btnYes, #btnNo").attr("disabled", true);
+						$("#btnYes, #btnNo").html("Loading");
+						$('#SyncModalData').modal({backdrop: 'static', keyboard: false})
+					},
+                    success: function (data) {						
+						$("#btnYes, #btnNo").removeAttr("disabled");
+						$("#btnYes").html("Ya");
+						$("#btnNo").html("Tidak");
+						
+                        swal("Sinkronisasi data kendaraan berhasil!", {
+                            buttons: {
+                                confirm: {
+                                className: "btn btn-success",
+                                },
+                            },
+                        });
+                        $('#SyncModalData').modal('hide');
+                        reload_table();
+                        $('#frmsyncdata').trigger("reset");
+                    },
+                    error: function (data) {
+                        alert("ada Error Kirim Data ke Server");
+                    }
+                });
+            });
         });
+		
+		function syncData(norangka){
+			$("#fu_no_rangka").val(norangka);
+			$("#SyncModalData").modal("show");
+			$("#titleWord").html('Apakah anda ingin melakukan sinkronisasi untuk unit dengan no. rangka <b>'+norangka+'</b> ?');
+		}
         
         function LoadComboAllModel() {
             var roleid = $("#roleid").val();
