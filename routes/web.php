@@ -36,5 +36,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/dropmodel', [App\Http\Controllers\Admin\VehicleController::class, 'getDataModelHaving'])->name('dropmodel');
         Route::get('/dropdowntype/{id}', [App\Http\Controllers\Admin\VehicleController::class, 'getDataTypeByModel'])->name('dropdowntype');
 
+         Route::get('/asuransi', [App\Http\Controllers\Admin\AsuransiController::class, 'index'])->name('asuransi');
     });
 });

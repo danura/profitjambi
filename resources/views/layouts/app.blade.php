@@ -83,13 +83,13 @@
                                         <span class="sub-item">Reminder Service</span>
                                     </a>
                                 </li>
-                                <li>
+                                 <li class="nav-item {{ Request::is('admin/suratkendaraan*') ? ' active' : '' }}">
                                     <a href="components/avatars.html">
                                         <span class="sub-item">Reminder STNK</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="components/avatars.html">
+                                 <li class="nav-item {{ Request::is('admin/asuransi*') ? ' active' : '' }}">
+                                    <a href="{{ route('asuransi') }}">
                                         <span class="sub-item">Reminder Asuransi</span>
                                     </a>
                                 </li>
