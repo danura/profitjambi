@@ -83,7 +83,7 @@
                                         <span class="sub-item">Reminder Service</span>
                                     </a>
                                 </li>
-                                 <li class="nav-item {{ Request::is('admin/suratkendaraan*') ? ' active' : '' }}">
+                                 <li class="nav-item">
                                     <a href="components/avatars.html">
                                         <span class="sub-item">Reminder STNK</span>
                                     </a>

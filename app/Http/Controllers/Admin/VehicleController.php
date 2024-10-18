@@ -106,9 +106,9 @@ class VehicleController extends Controller
                 <br><span class="badge bg-secondary w-100">'.$post->fu_no_pol.'</span></a>';;
                 $nestedData['model'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_model." - ".$post->fu_type.'</a>';
                 $nestedData['warna'] = $post->fu_color;
-                $nestedData['tglbeli'] =$post->fu_tgl_bp."<br>".$usiaunit;
-                $nestedData['tglbpkb'] =$post->fu_tgl_bpkb;
-                $nestedData['tglstnk'] =$post->fu_tgl_stnk;
+                $nestedData['cccc'] = $post->fu_tgl_bp."<br>".$usiaunit;
+                $nestedData['tglbpkb'] = $post->fu_tgl_bpkb;
+                $nestedData['tglstnk'] = $post->fu_tgl_stnk;
 				$nestedData['action'] = $btnView;
                 $data[] = $nestedData;
             }

@@ -10,7 +10,7 @@
         <div class="page-inner">
             <div class="page-header">
                 <h3 class="fw-bold mb-3">Data Reminder Asuransi</h3>
-                
+
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -32,7 +32,7 @@
                                         <i class="fas fa-search"></i> Display Data
                                     </button>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -41,13 +41,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                       
+
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table
-                                    id="dataTable"
-                                    class="display datatable table table-striped table-hover table-bordered"
-                                >
+                                <table id="dataTable" class="display datatable table table-striped table-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>NO</th>
@@ -88,8 +85,8 @@
             LoadComboAllModel();
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-           
-            
+
+
         });
 
         function LoadComboAllModel() {
@@ -133,7 +130,7 @@
                 bInfo: false,
 
                 ajax: {
-                    url: "{{ route('listvehicle') }}",
+                    url: "{{ route('listasuransi') }}",
                     dataType: "json",
                     type: "POST",
                     data: function (d) {
@@ -148,7 +145,7 @@
                     {data: 'norangka', name: 'norangka'},
                     {data: 'model', name: 'model'},
                     {data: 'warna', name: 'warna'},
-                    {data: 'tglbeli', name: 'tglbeli'},
+                    {data: 'tglasuransi', name: 'tglasuransi'},
                 ]
             });
 
@@ -162,7 +159,7 @@
         {
             dataTable.ajax.reload(null,false); //reload datatable ajax
         }
-       
+
     </script>
 
 @endsection

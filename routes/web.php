@@ -10,7 +10,7 @@ Route::get('/', function () {
     }
 });
 
-#### Update Data Vehicle AMS 
+#### Update Data Vehicle AMS
 Route::get('/testvehicle', [App\Http\Controllers\Admin\VehicleController::class, 'TestDataAPiUnit']);
 
 Route::prefix('admin')->group(function () {
@@ -36,6 +36,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/dropmodel', [App\Http\Controllers\Admin\VehicleController::class, 'getDataModelHaving'])->name('dropmodel');
         Route::get('/dropdowntype/{id}', [App\Http\Controllers\Admin\VehicleController::class, 'getDataTypeByModel'])->name('dropdowntype');
 
-         Route::get('/asuransi', [App\Http\Controllers\Admin\AsuransiController::class, 'index'])->name('asuransi');
+        Route::get('/asuransi', [App\Http\Controllers\Admin\AsuransiController::class, 'index'])->name('asuransi');
+        Route::post('/asuransi/list', [App\Http\Controllers\Admin\AsuransiController::class, 'listdata'])->name('listasuransi');
     });
 });
