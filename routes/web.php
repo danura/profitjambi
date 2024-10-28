@@ -16,6 +16,9 @@ Route::get('/testvehicle', [App\Http\Controllers\Admin\VehicleController::class,
 Route::prefix('admin')->group(function () {
     Route::group(['middleware' => 'auth'], function() {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/calendar-event-source',  [App\Http\Controllers\Admin\DashboardController::class, 'calendarEvents']);
+        Route::get('/calendar-detail/{id}',  [App\Http\Controllers\Admin\DashboardController::class, 'ViewDetailUnitID']);
+        Route::get('/get-banner/{id}',  [App\Http\Controllers\Admin\DashboardController::class, 'getDataBannerID']);
 
         Route::get('/vehicle', [App\Http\Controllers\Admin\VehicleController::class, 'index'])->name('vehicle');
         Route::post('/vehicle/list', [App\Http\Controllers\Admin\VehicleController::class, 'listdata'])->name('listvehicle');
@@ -25,6 +28,9 @@ Route::prefix('admin')->group(function () {
         Route::post('/vehicle/update/', [App\Http\Controllers\Admin\VehicleController::class, 'updatedata'])->name('updatevehicle');
         Route::get('/vehicle/historysvc', [App\Http\Controllers\Admin\VehicleController::class, 'listHistService'])->name('histservice');
         Route::post('/vehicle/hapus/', [App\Http\Controllers\Admin\VehicleController::class, 'hapusdata'])->name('deletevehicle');
+
+
+        Route::post('/secondprice/list', [App\Http\Controllers\Admin\VehicleController::class, 'listAppraise'])->name('listAppraise');
 
         Route::get('/profill', [App\Http\Controllers\Admin\ProfillController::class, 'index'])->name('profill');
         Route::post('/profill/store', [App\Http\Controllers\Admin\ProfillController::class, 'storedata'])->name('storeprofill');

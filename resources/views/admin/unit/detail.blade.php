@@ -56,6 +56,7 @@
 						<div class="tab">
 							<button class="tablinks" onclick="openCity(event, 'unit')" id="defaultOpen">Informasi Unit</button>
 							<button class="tablinks" onclick="openCity(event, 'history')">History Service</button>
+							<button class="tablinks" onclick="openCity(event, 'appraise')">Harga Mobil Bekas</button>
 						</div>
 						
 						<div class="tabcontent" id="unit">
@@ -74,6 +75,7 @@
 									<div class="row mb-4 nonauto">
 										<div class="col-sm-8">
 											<input type="hidden" id="norangka" value="{{ $row->fu_no_rangka }}">
+											<input type="hidden" id="fu_model" value="{{ $row->fu_model }}">
 											<table class="table table-bordered table-hover">
 												<tr>
 													<th width="40%">Model</th>
@@ -87,10 +89,7 @@
 													<th>Warna</th>
 													<td> {{$row->fu_color}} </td>
 												</tr>
-												<tr>
-													<th>Tanggal SPK</th>
-													<td> {{$row->fu_tgl_spk}} </td>
-												</tr>
+												
 												<tr>
 													<th>Tanggal Beli</th>
 													<td> {{$row->fu_tgl_bp}} <br>  
@@ -101,10 +100,7 @@
 														@endif
 													</td>
 												</tr>
-												<tr>
-													<th>Tanggal DEC</th>
-													<td> {{$row->fu_tgl_dec}} </td>
-												</tr>
+												
 												<tr>
 													<th>Tanggal BPKB</th>
 													<td> {{$row->fu_tgl_bpkb}} </td>
@@ -152,6 +148,26 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="tabcontent" id="appraise">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table id="datatableapp" class="display datatable table table-striped table-hover table-bordered" width="100%">
+										<thead>
+											<tr>
+												<th><div align="center">NO</div></th>
+												<th><div align="center">MODEL</div></th>
+												<th><div align="center">TYPE</div></th>
+												<th><div align="center">TAHUN</div></th>
+												<th><div align="center">HARGA</div></th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>	
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -176,46 +192,83 @@
 	
 	
 	hist_service();
+	getDataAppraisePrice();
 	
  });
  
-function hist_service(){
-	var norangka = $("#norangka").val();
-	var dataTable = $('#datatable').DataTable({
-		"processing": true,
-		"serverSide": true,
-		"bLengthChange": false,
-		"searching": false,
-		"destroy": true,
-		stateSave: false,
-		pageLength: 10,
-		"ajax":{
-				 "url": "{{ route('histservice') }}",
-				 "dataType": "json",
-				 "type": "GET",
-				 "data": {
-						_token: "{{csrf_token()}}",
-						norangka:norangka,
-					}
-			   },
-		"columns": [
-			{
-				"data": "no"
-			},
-			{
-				"data": "police_no"
-			},
-			{
-				"data": "repair_type"
-			},
-			{
-				"data": "repair_date"
-			},
-		],
-    });
-	
-	dataTable.ajax.reload(null,false);
-}
+	function hist_service(){
+		var norangka = $("#norangka").val();
+		var dataTable = $('#datatable').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"bLengthChange": false,
+			"searching": false,
+			"destroy": true,
+			stateSave: false,
+			pageLength: 10,
+			"ajax":{
+					"url": "{{ route('histservice') }}",
+					"dataType": "json",
+					"type": "GET",
+					"data": {
+							_token: "{{csrf_token()}}",
+							norangka:norangka,
+						}
+				},
+			"columns": [
+				{
+					"data": "no"
+				},
+				{
+					"data": "police_no"
+				},
+				{
+					"data": "repair_type"
+				},
+				{
+					"data": "repair_date"
+				},
+			],
+		});
+		
+		dataTable.ajax.reload(null,false);
+	}
+
+	function getDataAppraisePrice(){
+		var dataTables = $('#datatableapp').DataTable({
+			responsive: false,
+			bDeferRender: true,
+			processing: true,
+			serverSide: true,
+			autoWidth: false,
+			pageLength: 10,
+			lengthChange: false,
+			ordering:false,
+			"order": [[ 2, "ASC" ]],
+			bFilter: false,
+			bInfo: false,
+			ajax: {
+                    url: "{{ route('listAppraise') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: function (d) {
+                        d.search = $('input[type="search"]').val();
+                        d.modelid = $('#fu_model').val();
+                        d._token = "{{csrf_token()}}";
+                    }
+                },
+                columns: [
+                    {data: 'DT_RowIndex',},
+                    
+                    {data: 'model', name: 'model'},
+                    {data: 'type', name: 'type'},
+                    {data: 'year', name: 'year'},
+                    {data: 'price', name: 'price'},
+                    
+                   
+                ]
+		});
+	}
  
 function openCity(evt, cityName) {
 	var i, tabcontent, tablinks;

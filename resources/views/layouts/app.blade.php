@@ -38,7 +38,7 @@
         <div class="sidebar" data-background-color="dark">
             <div class="sidebar-logo">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
+            <div class="logo-header" data-background-color="white">
                 <a href="index.html" class="logo">
                     <img src="{{ asset('public/assets/img/profit.png') }}" alt="navbar brand" class="navbar-brand" height="20"/>
                 </a>
@@ -70,6 +70,14 @@
                         </span>
                         <h4 class="text-section">MENU</h4>
                     </li>
+                    <li class="nav-item {{ Request::is('admin/vehicle*') ? ' active' : '' }}">
+                        <a href="{{ route('vehicle') }}">
+                            <i class="fas fa-car"></i>
+                            <p>Data Unit</p>
+                          
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a data-bs-toggle="collapse" href="#base">
                             <i class="fas fa-layer-group"></i>
@@ -96,18 +104,19 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item {{ Request::is('admin/vehicle*') ? ' active' : '' }}">
+
+                     <li class="nav-item {{ Request::is('admin/bodypaint*') ? ' active' : '' }}">
                         <a href="{{ route('vehicle') }}">
-                            <i class="fas fa-car"></i>
-                            <p>Data Unit</p>
+                            <i class="fas fa-car-crash"></i>
+                            <p>Body Paint Care</p>
                           
                         </a>
                     </li>
+                    
                     <li class="nav-item {{ Request::is('admin/profill*') ? ' active' : '' }}">
                         <a href="{{ route('profill') }}">
                             <i class="fas fa-file"></i>
                             <p>User Profile</p>
-                           
                         </a>
                     </li>
                 </ul>
@@ -247,18 +256,32 @@
 
         @yield('content')
 
-        <footer class="footer">
-            <div class="container-fluid d-flex justify-content-between">
-                <nav class="pull-left">
-                    <marquee direction="left" onmouseover="this.stop()" onmouseout="this.start()">
-                        Selamat Ulang Tahun PT ADI SARANA TBK
-                    </marquee>
-                </nav>
-                <div class="copyright">
-                    
-                </div>
-                
+       <footer class="footer">
+          <div class="container-fluid d-flex justify-content-between">
+            <nav class="pull-left">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    Agung Toyota JAMBI II
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> MEMBER OF </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> Agung Concern </a>
+                </li>
+              </ul>
+            </nav>
+            <div class="copyright">
+              2024, made with <i class="fa fa-heart heart text-danger"></i> by
+              <a href="#">JB2IT</a>
             </div>
+            <div>
+              Distributed by
+              <a target="_blank" href="$">www.agungtoyota.co.id</a>.
+            </div>
+          </div>
         </footer>
     </div>
 
@@ -289,6 +312,10 @@
     <script src="{{ asset('public/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
     
     <script src="{{ asset('public/assets/js/kaiadmin.min.js') }}"></script>
+
+    <script>
+     
+    </script>
 
   </body>
 </html>

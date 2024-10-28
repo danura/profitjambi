@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 use DB;
 
 
@@ -15,6 +16,16 @@ class VehicleController extends Controller
     public function index()
     {
         return view('admin.unit.index');
+    }
+
+    public function CountOffmonth($datein){
+        $monthsSubscribed = 0;
+        if(!empty($datein)){
+            $subscriptionStartDate = Carbon::parse($datein);
+            $currentDate = Carbon::now();
+            $monthsSubscribed = $subscriptionStartDate->diffInMonths($currentDate);
+        }
+        return $monthsSubscribed; 
     }
 
     public function storedata(Request $request){
@@ -91,6 +102,12 @@ class VehicleController extends Controller
         if(!empty($posts))
         {
             $lastid = 0;
+            $stnkdate = "";
+            $lastservices = "";
+            $insurances = "";
+            $bgstnk = 'secondary';
+            $bgservice = 'secondary';
+            $bginsurances = 'secondary';
             foreach ($posts as $post)
             {
 				$btnView = '<a class="btn btn-primary btn-sm" type="button" onclick="getDetailUnit('.$post->fu_id.')"><i class="fas fa-eye"></i> Detail</button>';
@@ -98,17 +115,37 @@ class VehicleController extends Controller
 				///.'&nbsp;'.$btnDel
                 
 				$start++;
-                if($post->usiaunit > 3) $usiaunit = "<span class='badge bg-danger w-100'>".$post->usiaunit." Tahun</span>";
-                else $usiaunit = "<span class='badge bg-info w-100'>".$post->usiaunit." Tahun</span>";
+                if($post->usiaunit >= 3) {
+                    $usiaunit = "<span class='badge bg-danger w-100'>".$post->fu_tgl_bp."<br>".$post->usiaunit." Tahun</span>";
+                } else {
+                    $usiaunit = "<span class='badge bg-secondary w-100'>".$post->fu_tgl_bp."</span>";
+                }
+
+                $stnkdate  =  $this->CountOffmonth($post->fu_tgl_stnk);
+
+                if($stnkdate >= -1) $bgstnk = 'danger';
+                else $bgstnk = 'success';
+
+                $lastservices  =  $this->CountOffmonth($post->fu_tgl_next_service);
+
+                if($lastservices > 0) $bgservice = 'danger';
+                else $bgservice = 'success';
+
+                $insurances  =  $this->CountOffmonth($post->fu_insurance_active);
+
+                if($insurances >= -1) $bginsurances = 'danger';
+                else $bginsurances = 'success';
+                
 
                 $nestedData['DT_RowIndex'] = $start;
                 $nestedData['norangka'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_no_rangka.'
-                <br><span class="badge bg-secondary w-100">'.$post->fu_no_pol.'</span></a>';;
-                $nestedData['model'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_model." - ".$post->fu_type.'</a>';
-                $nestedData['warna'] = $post->fu_color;
-                $nestedData['cccc'] = $post->fu_tgl_bp."<br>".$usiaunit;
-                $nestedData['tglbpkb'] = $post->fu_tgl_bpkb;
-                $nestedData['tglstnk'] = $post->fu_tgl_stnk;
+                <br><span class="badge bg-dark w-100">'.$post->fu_no_pol.'</span></a>';
+                $nestedData['model'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_model." - ".$post->fu_type."</a>";
+                $nestedData['warna'] = "<code>".$post->fu_color."</code>";
+                $nestedData['tglbeli'] =  $usiaunit;
+                $nestedData['tgllast'] = "<span class='badge bg-".$bgservice." w-100'>".$post->fu_tgl_last_service."</span>";
+                $nestedData['tglstnk'] = "<span class='badge bg-".$bgstnk." w-100'>".$post->fu_tgl_stnk."</span>";
+                $nestedData['tglinsurance'] = "<span class='badge bg-".$bginsurances." w-100'>".$post->fu_insurance_active."</span>";
 				$nestedData['action'] = $btnView;
                 $data[] = $nestedData;
             }
@@ -141,6 +178,9 @@ class VehicleController extends Controller
             'fu_tgl_stnk'             => $request->fu_tgl_stnk,
             'fu_tgl_bpkb'             => $request->fu_tgl_bpkb,
             'fu_tgl_last_service'     => $request->fu_tgl_last_service,
+            'fu_tgl_next_service'     => $request->fu_tgl_next_service,
+            'fu_client'               => $request->fu_client,
+            'fu_client_note'          => $request->fu_client_note,
         ]);
 
 
@@ -300,5 +340,52 @@ class VehicleController extends Controller
 
         echo json_encode('200');
 	}
+
+
+    public function listAppraise(Request $request){
+        $limit = $request->input('length');
+        $start = $request->input('start');
+
+        $posts =  DB::table('master_price');
+        $posts = $posts->where('master_price.mp_model',$request->input('modelid'));
+        
+
+        $counter =  $posts->count();
+        $posts = $posts->orderBy('master_price.mp_id','ASC');
+        $posts = $posts->offset($start);
+        $posts = $posts->limit($limit);
+        $posts = $posts->get();
+
+        $totalFiltered =   $counter;
+
+        $data = array();
+        if(!empty($posts))
+        {
+
+            foreach ($posts as $post)
+            {
+				
+                
+				$start++;
+ 
+                $nestedData['DT_RowIndex'] = $start;
+                $nestedData['model'] = $post->mp_model;
+                $nestedData['type'] = $post->mp_type;
+                $nestedData['year'] = $post->mp_year;
+                $nestedData['price'] = number_format($post->mp_price,0,",",".");
+               
+                $data[] = $nestedData;
+            }
+        }
+
+         $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalFiltered),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }
 
 }

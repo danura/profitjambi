@@ -3,7 +3,6 @@
 @section('content')
 
     <link href="{{ asset('public/assets/vendor/datetimepicker/css/classic.css') }}" rel="stylesheet" />
-	<link href="{{ asset('public/assets/vendor/datetimepicker/css/classic.time.css') }}" rel="stylesheet" />
 	<link href="{{ asset('public/assets/vendor/datetimepicker/css/classic.date.css') }}" rel="stylesheet" />
 
     <div class="container">
@@ -55,16 +54,15 @@
                                     <thead>
                                         <tr>
                                             <th>NO</th>
-                                            <th>NO RANGKA</th>
-                                           
+                                            <th>NO-POL</th>
                                             <th>MODEL</th>
-                                           
                                             <th>WARNA</th>
-                                            <th>TGL BELI</th>
-                                            <th>TGL BPKB</th>
-                                            <th>TGL STNK</th>
+                                            
+                                            <th>BELI</th>
+                                            <th>STNK</th>
+                                            <th>LAST SERVICE</th>
+                                            <th>ASURANSI EXPIRE</th>
 											<th>ACT</th>
-                                           
                                         </tr>
                                     </thead>
                                 </table>
@@ -143,41 +141,41 @@
      <div class="modal fade" id="EditModalData" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Detail Unit </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="detailunit">
                     {{csrf_field()}}
                     <input type="hidden" readonly id="fu_id" name="fu_id">
-                    <!--
-                     $('[name="fu_no_pol"]').val(data.fu_no_pol);
-                    $('[name="fu_model"]').val(data.fu_model);
-                    $('[name="fu_type"]').val(data.fu_type);
-                    $('[name="fu_color"]').val(data.fu_color);-->
+                 
                     <div class="modal-body">
                         <div class="row mb-3">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="inputEnterYourName" class="col-form-label">No Rangka</label>
-                                <input type="text" class="form-control" id="fu_no_rangka" name="fu_no_rangka"  placeholder="No Rangka" autocomplete="off">
+                                <input type="text" class="form-control" id="fu_no_rangka" name="fu_no_rangka"  placeholder="No Rangka" autocomplete="off" readonly>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="inputEnterYourName" class="col-form-label">No Polisi</label>
                                 <input type="text" class="form-control" id="fu_no_pol" name="fu_no_pol"  placeholder="No Polisi" autocomplete="off">
+                            </div>
+                             <div class="col-sm-4">
+                                <label for="inputEnterYourName" class="col-form-label">Tanggal Next Service</label>
+                                <input type="text" class="form-control datepicker" id="fu_tgl_next_service" name="fu_tgl_next_service"  placeholder="Last Service" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-4">
                                 <label for="inputEnterYourName" class="col-form-label">Model</label>
-                                <input type="text" class="form-control" id="fu_model" name="fu_model"  placeholder="Model" autocomplete="off">
+                                <input type="text" class="form-control" id="fu_model" name="fu_model"  placeholder="Model" autocomplete="off" readonly>
                             </div>
                             <div class="col-sm-4">
                                 <label for="inputEnterYourName" class="col-form-label">Type</label>
-                                <input type="text" class="form-control" id="fu_type" name="fu_type"  placeholder="Type" autocomplete="off">
+                                <input type="text" class="form-control" id="fu_type" name="fu_type"  placeholder="Type" autocomplete="off" readonly>
                             </div>
                             <div class="col-sm-4">
                                 <label for="inputEnterYourName" class="col-form-label">Warna</label>
-                                <input type="text" class="form-control" id="fu_color" name="fu_color"  placeholder="Warna" autocomplete="off">
+                                <input type="text" class="form-control" id="fu_color" name="fu_color"  placeholder="Warna" autocomplete="off" readonly>
                             </div>
                         </div>
                          <div class="row mb-3">
@@ -199,10 +197,22 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <label for="inputEnterYourName" class="col-form-label">Client</label>
+                                <input type="text" class="form-control" id="fu_client" name="fu_client"  placeholder="Client" autocomplete="off">
+                            </div>
+
+                             <div class="col-sm-6">
+                                <label for="inputEnterYourName" class="col-form-label">Client Keterangan</label>
+                                <textarea class="form-control" id="fu_client_note" name="fu_client_note"  placeholder="Client Notes" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">UPDATE DATA</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
 
                     </div>
                 </form>
@@ -244,11 +254,13 @@
     <script src="{{ asset('public/assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datetimepicker/js/legacy.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.js') }}"></script>
-    <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.time.js') }}"></script>
     <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.date.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
+
+            
+           
 
             $('.datepicker').pickadate({
                 selectMonths: true,
@@ -422,14 +434,12 @@
                 columns: [
                     {data: 'DT_RowIndex',},
                     {data: 'norangka', name: 'norangka'},
-                   
                     {data: 'model', name: 'model'},
-                    
                     {data: 'warna', name: 'warna'},
                     {data: 'tglbeli', name: 'tglbeli'},
-                    {data: 'tglbpkb', name: 'tglbpkb'},
                     {data: 'tglstnk', name: 'tglstnk'},
-					
+                    {data: 'tgllast', name: 'tgllast'},
+                    {data: 'tglinsurance', name: 'tglinsurance'},
                     {data: 'action', name: 'action'},
                    
                 ]
@@ -464,6 +474,7 @@
         $('body').on('click', '#getDataCustId', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
+            $(".datepicker").attr("readonly", false); 
             $.ajax({
                 url: "{{ URL('/admin/vehicle/editdata/') }}/"+id,
                 type: "GET",
@@ -478,8 +489,11 @@
                     $('[name="fu_tgl_bpkb"]').val(data.fu_tgl_bpkb);
                     $('[name="fu_tgl_stnk"]').val(data.fu_tgl_stnk);
                     $('[name="fu_tgl_last_service"]').val(data.fu_tgl_last_service);
+                    $('[name="fu_tgl_next_service"]').val(data.fu_tgl_next_service);
                     $('[name="fu_id"]').val(data.fu_id);
-                    
+                    $('[name="fu_client"]').val(data.fu_client);
+                    $('[name="fu_client_note"]').val(data.fu_client_note);
+          
                 }
             });
 
