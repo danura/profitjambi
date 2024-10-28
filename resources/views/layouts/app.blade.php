@@ -106,7 +106,7 @@
                     </li>
 
                      <li class="nav-item {{ Request::is('admin/bodypaint*') ? ' active' : '' }}">
-                        <a href="{{ route('vehicle') }}">
+                        <a href="{{ route('bodypaint') }}">
                             <i class="fas fa-car-crash"></i>
                             <p>Body Paint Care</p>
                           

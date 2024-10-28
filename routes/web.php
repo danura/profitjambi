@@ -32,6 +32,10 @@ Route::prefix('admin')->group(function () {
 
         Route::post('/secondprice/list', [App\Http\Controllers\Admin\VehicleController::class, 'listAppraise'])->name('listAppraise');
 
+
+        Route::get('/bodypaint', [App\Http\Controllers\Admin\BodyPricesController::class, 'index'])->name('bodypaint');
+        Route::post('/bodypaint/list', [App\Http\Controllers\Admin\BodyPricesController::class, 'listdata'])->name('listbp');
+
         Route::get('/profill', [App\Http\Controllers\Admin\ProfillController::class, 'index'])->name('profill');
         Route::post('/profill/store', [App\Http\Controllers\Admin\ProfillController::class, 'storedata'])->name('storeprofill');
 
