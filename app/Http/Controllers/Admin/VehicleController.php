@@ -147,6 +147,8 @@ class VehicleController extends Controller
                 $nestedData['tglstnk'] = "<span class='badge bg-".$bgstnk." w-100'>".$post->fu_tgl_stnk."</span>";
                 $nestedData['tglinsurance'] = "<span class='badge bg-".$bginsurances." w-100'>".$post->fu_insurance_active."</span>";
 				$nestedData['action'] = $btnView;
+                $nestedData['client'] =  $post->fu_client;
+                ///client
                 $data[] = $nestedData;
             }
         }

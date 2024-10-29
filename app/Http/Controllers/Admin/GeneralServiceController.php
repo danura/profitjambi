@@ -16,6 +16,16 @@ class GeneralServiceController extends Controller
         return view('admin.bengkel.index');
     }
 
+    public function CountOffmonth($datein){
+        $monthsSubscribed = 0;
+        if(!empty($datein)){
+            $subscriptionStartDate = Carbon::parse($datein);
+            $currentDate = Carbon::now();
+            $monthsSubscribed = $subscriptionStartDate->diffInMonths($currentDate);
+        }
+        return $monthsSubscribed; 
+    }
+
     public function listData(Request $request){
         $customer_id = auth()->user()->customer_id;
         $limit = $request->input('length');
@@ -60,16 +70,22 @@ class GeneralServiceController extends Controller
 				}else{
 					$showDate = '<span class="badge bg-success w-100">'.$post->fu_tgl_next_service.'</span>';
 				}
+
+                $lastservices  =  $this->CountOffmonth($post->fu_tgl_next_service);
+
+                if($lastservices > 0) $bgservice = 'danger';
+                else $bgservice = 'success';
+
 				
 				$start++;
                 $nestedData['DT_RowIndex'] = $start;
-                $nestedData['norangka'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_no_rangka.'
+                $nestedData['norangka'] = '<a href="#" onclick="getDetailUnit('.$post->fu_id.')">'.$post->fu_no_rangka.'
                 <br><span class="badge bg-dark w-100">'.$post->fu_no_pol.'</span></a>';
-                $nestedData['model'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_model." - ".$post->fu_type.'</a>';
+                $nestedData['model'] = '<a href="#"onclick="getDetailUnit('.$post->fu_id.')">'.$post->fu_model." - ".$post->fu_type.'</a>';
                 $nestedData['warna'] = $post->fu_color;
 
                 $nestedData['lastservice'] = $post->fu_tgl_last_service;
-                $nestedData['nextservice'] = $showDate;
+                $nestedData['nextservice'] = "<span class='badge bg-".$bgservice." w-100'>".$post->fu_tgl_next_service."</span>";
                 $nestedData['action'] = '<button type="button" class="btn btn-sm btn-primary" onclick="syncData(\''.$post->fu_no_rangka.'\')"><i class="fas fa-sync"></i> Sinkron Data </button>';
                 
                 $data[] = $nestedData;

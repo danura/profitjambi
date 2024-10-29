@@ -57,12 +57,12 @@
                                             <th>NO-POL</th>
                                             <th>MODEL</th>
                                             <th>WARNA</th>
-                                            
                                             <th>BELI</th>
                                             <th>STNK</th>
                                             <th>LAST SERVICE</th>
                                             <th>ASURANSI EXPIRE</th>
-											<th>ACT</th>
+                                            <th>CLIENT</th>
+											<th>DETAIL</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -414,7 +414,7 @@
                 serverSide: true,
                 autoWidth: false,
                 pageLength: 10,
-                lengthChange: false,
+                lengthChange: true,
                 ordering:false,
                 "order": [[ 2, "ASC" ]],
                 bFilter: false,
@@ -440,6 +440,7 @@
                     {data: 'tglstnk', name: 'tglstnk'},
                     {data: 'tgllast', name: 'tgllast'},
                     {data: 'tglinsurance', name: 'tglinsurance'},
+                    {data: 'client', name: 'client'},
                     {data: 'action', name: 'action'},
                    
                 ]

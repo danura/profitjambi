@@ -183,7 +183,7 @@
                 serverSide: true,
                 autoWidth: false,
                 pageLength: 10,
-                lengthChange: false,
+                lengthChange: true,
                 ordering:false,
                 "order": [[ 2, "ASC" ]],
                 bFilter: false,
@@ -221,6 +221,10 @@
         {
             dataTable.ajax.reload(null,false); //reload datatable ajax
         }
+
+        function getDetailUnit(fu_id){
+			window.location.href = "{{ URL('/admin/vehicle/detail/') }}/"+fu_id;
+		}
 
     </script>
 
