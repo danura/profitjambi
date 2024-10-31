@@ -32,14 +32,11 @@ class BodyPricesController extends Controller
             $lastid = 0;
             foreach ($posts as $post)
             {
-				
-   
 				$start++;
-
-                
                 $nestedData['DT_RowIndex'] = $start;
                 $nestedData['item'] = $post->bp_name;
                 $nestedData['price'] =  number_format($post->bp_price,0,",",".");
+                $nestedData['desc'] = $post->bp_description;
                 
                 $data[] = $nestedData;
             }
@@ -54,4 +51,12 @@ class BodyPricesController extends Controller
 
         echo json_encode($json_data);
     }
+
+
+     public function getAllJobPainting(){
+        $query = DB::table('master_body_price')->orderBy('bp_name', 'ASC');
+        $query = $query->pluck("bp_name","bp_price");
+        return response()->json( $query);
+    }
+
 }

@@ -29,13 +29,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/vehicle/historysvc', [App\Http\Controllers\Admin\VehicleController::class, 'listHistService'])->name('histservice');
         Route::post('/vehicle/hapus/', [App\Http\Controllers\Admin\VehicleController::class, 'hapusdata'])->name('deletevehicle');
 
-        
 
         Route::post('/secondprice/list', [App\Http\Controllers\Admin\VehicleController::class, 'listAppraise'])->name('listAppraise');
+        Route::post('/serviceprice/list', [App\Http\Controllers\Admin\VehicleController::class, 'listBiayaServices'])->name('listpriceservice');
 
 
         Route::get('/bodypaint', [App\Http\Controllers\Admin\BodyPricesController::class, 'index'])->name('bodypaint');
         Route::post('/bodypaint/list', [App\Http\Controllers\Admin\BodyPricesController::class, 'listdata'])->name('listbp');
+        Route::get('/bodypaint/joblist', [App\Http\Controllers\Admin\BodyPricesController::class, 'getAllJobPainting']);
 
         Route::get('/profill', [App\Http\Controllers\Admin\ProfillController::class, 'index'])->name('profill');
         Route::post('/profill/store', [App\Http\Controllers\Admin\ProfillController::class, 'storedata'])->name('storeprofill');

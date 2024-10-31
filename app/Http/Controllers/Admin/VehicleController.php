@@ -189,6 +189,23 @@ class VehicleController extends Controller
     }
 
     public function updatedata(Request $request){
+
+        $nama_file = "";
+        $request->validate([
+            'file' => 'mimes:jpg,jpeg,png|max:3048'
+        ]);
+
+        $file = $request->file('file');
+        if(!empty($file)){
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('public/assets/img/unit/',$nama_file);
+
+            $post_img  = DB::table('fleet_vehicle')->where('fu_id', $request->fu_id)->update([
+                'fu_image' => $nama_file,
+            ]);
+        }
+
+
         $post  = DB::table('fleet_vehicle')->where('fu_id', $request->fu_id)->update([
             'fu_no_rangka'            => $request->fu_no_rangka,
             'fu_no_pol'               => $request->fu_no_pol,
@@ -381,19 +398,61 @@ class VehicleController extends Controller
         $data = array();
         if(!empty($posts))
         {
-
             foreach ($posts as $post)
             {
-				
-                
 				$start++;
- 
                 $nestedData['DT_RowIndex'] = $start;
                 $nestedData['model'] = $post->mp_model;
                 $nestedData['type'] = $post->mp_type;
                 $nestedData['year'] = $post->mp_year;
                 $nestedData['price'] = number_format($post->mp_price,0,",",".");
-               
+                $data[] = $nestedData;
+            }
+        }
+
+         $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalFiltered),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }
+
+
+     public function listBiayaServices(Request $request){
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $modelid = $request->input('modelid');
+
+        $posts =  DB::table('master_price_service');
+        $posts = $posts->where('master_price_service.sp_model', 'LIKE',"%{$modelid}%");
+       
+        $counter =  $posts->count();
+        $posts = $posts->orderBy('master_price_service.sp_km','ASC');
+        $posts = $posts->offset($start);
+        $posts = $posts->limit($limit);
+        $posts = $posts->get();
+
+        $totalFiltered =   $counter;
+
+        $data = array();
+        if(!empty($posts))
+        {   
+            $total = 0;
+            foreach ($posts as $post)
+            {
+				$start++;
+
+                $total = $post->sp_jasa + $post->sp_part;
+
+                $nestedData['DT_RowIndex'] = $start;
+                $nestedData['model'] = $post->sp_model;
+                $nestedData['jasa'] = number_format($post->sp_jasa,0,",",".");
+                $nestedData['part'] = number_format($post->sp_part,0,",",".");
+                $nestedData['km'] = number_format($post->sp_km,0,",",".");
+                $nestedData['total'] = number_format($total,0,",",".");
                 $data[] = $nestedData;
             }
         }

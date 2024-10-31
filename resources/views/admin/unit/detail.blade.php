@@ -57,6 +57,7 @@
 							<button class="tablinks" onclick="openCity(event, 'unit')" id="defaultOpen">Informasi Unit</button>
 							<button class="tablinks" onclick="openCity(event, 'history')">History Service</button>
 							<button class="tablinks" onclick="openCity(event, 'appraise')">Harga Mobil Bekas</button>
+							<button class="tablinks" onclick="openCity(event, 'priceservice')">Biaya Service</button>
 						</div>
 						
 						<div class="tabcontent" id="unit">
@@ -128,7 +129,7 @@
 												<div class="card-body">
 													<div class="card-sub">
 														@if(!empty($row->fu_image))
-															<img src="{{ asset('public/assets/img/unit/')."/".$row->fu_image}}" alt="navbar brand"  height="189"/>
+															<img src="{{ asset('public/assets/img/unit/')."/".$row->fu_image}}" alt="navbar brand" class="img-fluid"  height="189"/>
 														@else
 															<img src="{{ asset('public/assets/img/unit/noimg.png') }}" alt="navbar brand"  height="189"/>  
 														@endif
@@ -169,7 +170,7 @@
 						<div class="tabcontent" id="appraise">
 							<div class="card-body">
 								<div class="table-responsive">
-									<table id="datatableapp" class="display datatable table table-striped table-hover table-bordered" width="100%">
+									<table id="" class="display datatable table table-striped table-hover table-bordered" width="100%">
 										<thead>
 											<tr>
 												<th><div align="center">NO</div></th>
@@ -193,6 +194,26 @@
 							</div>
 						</div>
 
+
+						<div class="tabcontent" id="priceservice">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table id="datatableapp" class="display datatable table table-striped table-hover table-bordered" width="100%">
+										<thead>
+											<tr>
+												<th>NO</th>
+												<th>MODEL</th>
+												<th>KM</th>
+												<th>JASA</th>
+												<th>PART</th>
+												<th>TOTAL</th>
+											</tr>
+										</thead>
+									</table>	
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -207,107 +228,106 @@
 <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.js') }}"></script>
 <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.time.js') }}"></script>
 <script src="{{ asset('public/assets/vendor/datetimepicker/js/picker.date.js') }}"></script>
- <script type="text/javascript">
- $(document).ready(function(){
-	document.getElementById("defaultOpen").click();
-	
-	$("#btnBack").click(function(){
-		window.location.href = "{{ URL('admin/vehicle') }}";
-	});
-	
-	
-	hist_service();
+ 	<script type="text/javascript">
+		$(document).ready(function(){
+			document.getElementById("defaultOpen").click();
+			
+			$("#btnBack").click(function(){
+				window.location.href = "{{ URL('admin/vehicle') }}";
+			});
+			
+			
+			hist_service();
+			getDataBiayaService();
 
-	
- });
+			
+		});
  
-	function hist_service(){
-		var norangka = $("#norangka").val();
-		var dataTable = $('#datatable').DataTable({
-			"processing": true,
-			"serverSide": true,
-			"bLengthChange": false,
-			"searching": false,
-			"destroy": true,
-			stateSave: false,
-			pageLength: 10,
-			"ajax":{
-					"url": "{{ route('histservice') }}",
-					"dataType": "json",
-					"type": "GET",
-					"data": {
-							_token: "{{csrf_token()}}",
-							norangka:norangka,
+		function hist_service(){
+			var norangka = $("#norangka").val();
+			var dataTable = $('#datatable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				"bLengthChange": false,
+				"searching": false,
+				"destroy": true,
+				stateSave: false,
+				pageLength: 10,
+				"ajax":{
+						"url": "{{ route('histservice') }}",
+						"dataType": "json",
+						"type": "GET",
+						"data": {
+								_token: "{{csrf_token()}}",
+								norangka:norangka,
+							}
+					},
+				"columns": [
+					{
+						"data": "no"
+					},
+					{
+						"data": "police_no"
+					},
+					{
+						"data": "repair_type"
+					},
+					{
+						"data": "repair_date"
+					},
+				],
+			});
+			
+			dataTable.ajax.reload(null,false);
+		}
+
+		function getDataBiayaService(){
+			var dataTables = $('#datatableapp').DataTable({
+				responsive: false,
+				bDeferRender: true,
+				processing: true,
+				serverSide: true,
+				autoWidth: false,
+				pageLength: 10,
+				lengthChange: false,
+				ordering:false,
+				"order": [[ 2, "ASC" ]],
+				bFilter: false,
+				bInfo: false,
+				ajax: {
+						url: "{{ route('listpriceservice') }}",
+						dataType: "json",
+						type: "POST",
+						data: function (d) {
+							d.search = $('input[type="search"]').val();
+							d.modelid = $('#fu_model').val();
+							d._token = "{{csrf_token()}}";
 						}
-				},
-			"columns": [
-				{
-					"data": "no"
-				},
-				{
-					"data": "police_no"
-				},
-				{
-					"data": "repair_type"
-				},
-				{
-					"data": "repair_date"
-				},
-			],
-		});
-		
-		dataTable.ajax.reload(null,false);
-	}
-
-	function getDataAppraisePrice(){
-		var dataTables = $('#datatableapp').DataTable({
-			responsive: false,
-			bDeferRender: true,
-			processing: true,
-			serverSide: true,
-			autoWidth: false,
-			pageLength: 10,
-			lengthChange: false,
-			ordering:false,
-			"order": [[ 2, "ASC" ]],
-			bFilter: false,
-			bInfo: false,
-			ajax: {
-                    url: "{{ route('listAppraise') }}",
-                    dataType: "json",
-                    type: "POST",
-                    data: function (d) {
-                        d.search = $('input[type="search"]').val();
-                        d.modelid = $('#fu_model').val();
-                        d._token = "{{csrf_token()}}";
-                    }
-                },
-                columns: [
-                    {data: 'DT_RowIndex',},
-                    
-                    {data: 'model', name: 'model'},
-                    {data: 'type', name: 'type'},
-                    {data: 'year', name: 'year'},
-                    {data: 'price', name: 'price'},
-                    
-                   
-                ]
-		});
-	}
+					},
+					columns: [
+						{data: 'DT_RowIndex',},
+						{data: 'model', name: 'model'},
+						{data: 'km', name: 'km'},
+						{data: 'jasa', name: 'jasa'},
+						{data: 'part', name: 'part'},
+						{data: 'total', name: 'total'},
+					]
+			});
+		}
  
-function openCity(evt, cityName) {
-	var i, tabcontent, tablinks;
-	tabcontent = document.getElementsByClassName("tabcontent");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "none";
-	}
-	tablinks = document.getElementsByClassName("tablinks");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
-	}
-	document.getElementById(cityName).style.display = "block";
-	evt.currentTarget.className += " active";  
-}
+		function openCity(evt, cityName) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablinks");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(cityName).style.display = "block";
+			evt.currentTarget.className += " active";  
+		}
 
- </script>
+ 	</script>
 @endsection

@@ -76,7 +76,7 @@
     </div>
 
 
-     <div class="modal fade" id="exampleSmallModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="exampleSmallModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
@@ -146,7 +146,7 @@
                     <h5 class="modal-title">Detail Unit </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="detailunit">
+                <form id="detailunit" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <input type="hidden" readonly id="fu_id" name="fu_id">
                  
@@ -198,17 +198,27 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                         <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="inputEnterYourName" class="col-form-label">Foto Unit</label>
+                                <input type="file" class="form-control" name="file" id="file" >
+                            </div>
                             <div class="col-sm-6">
                                 <label for="inputEnterYourName" class="col-form-label">Client</label>
                                 <input type="text" class="form-control" id="fu_client" name="fu_client"  placeholder="Client" autocomplete="off">
                             </div>
+                        </div>
 
-                             <div class="col-sm-6">
+                        <div class="row mb-3">
+                            
+
+                            <div class="col-sm-6">
                                 <label for="inputEnterYourName" class="col-form-label">Client Keterangan</label>
                                 <textarea class="form-control" id="fu_client_note" name="fu_client_note"  placeholder="Client Notes" autocomplete="off"></textarea>
                             </div>
                         </div>
+
+                       
 
                     </div>
                     <div class="modal-footer">
