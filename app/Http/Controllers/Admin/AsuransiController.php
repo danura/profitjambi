@@ -30,6 +30,8 @@ class AsuransiController extends Controller
                 )
         );
 
+         $posts = $posts->whereDate('fleet_vehicle.fu_insurance_active', '<=', Carbon::today());
+
         $posts = $posts->where('fleet_vehicle.fu_customer_id',$customer_id)
 						->where('fleet_vehicle.fu_active', '<>', '1'); //0=>ditampilkan, 1=>dihapus
 

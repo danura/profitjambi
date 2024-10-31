@@ -52,5 +52,7 @@ Route::prefix('admin')->group(function () {
     
         Route::get('/stnk', [App\Http\Controllers\Admin\STNKController::class, 'index'])->name('stnk');
         Route::get('/stnk/listexpire', [App\Http\Controllers\Admin\STNKController::class, 'listexpire']);
+        Route::post('/stnk/listData', [App\Http\Controllers\Admin\STNKController::class, 'listData'])->name('liststnk');
+        ///listData
     });
 });

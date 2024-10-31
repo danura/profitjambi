@@ -73,7 +73,7 @@
 								
 								<div class="col-sm-12">
 									<div class="row mb-4 nonauto">
-										<div class="col-sm-8">
+										<div class="col-sm-7">
 											<input type="hidden" id="norangka" value="{{ $row->fu_no_rangka }}">
 											<input type="hidden" id="fu_model" value="{{ $row->fu_model }}">
 											<table class="table table-bordered table-hover">
@@ -119,7 +119,24 @@
 												</tr>
 											</table>
 										</div>
-										<div class="col-sm-2"></div>
+										<div class="col-sm-5">
+											
+                							<div class="card">
+												<div class="card-header">
+													<div class="card-title"></div>
+												</div>
+												<div class="card-body">
+													<div class="card-sub">
+														@if(!empty($row->fu_image))
+															<img src="{{ asset('public/assets/img/unit/')."/".$row->fu_image}}" alt="navbar brand"  height="189"/>
+														@else
+															<img src="{{ asset('public/assets/img/unit/noimg.png') }}" alt="navbar brand"  height="189"/>  
+														@endif
+													</div>
+													
+                  								</div>
+                							</div>
+              							</div>
 									</div>
 								</div>
 							</div>

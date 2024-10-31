@@ -78,7 +78,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item {{ Request::is('admin/bengkel*', 'admin/stnk*', 'admin/asuransi*') ? 'active submenu' : '' }}">
                         <a data-bs-toggle="collapse" href="#base">
                             <i class="fas fa-layer-group"></i>
                             <p>Reminder</p>
@@ -86,17 +86,17 @@
                         </a>
                         <div class="collapse" id="base">
                             <ul class="nav nav-collapse">
-                                <li class="nav-item {{ Request::is('admin/bengkel*') ? ' active' : '' }}">
+                                <li class="nav-item {{ Request::is('admin/bengkel*') ? 'active' : '' }}">
                                     <a href="{{ route('bengkel') }}">
                                         <span class="sub-item">Reminder Service</span>
                                     </a>
                                 </li>
-                                 <li class="nav-item {{ Request::is('admin/stnk*') ? ' active' : '' }}">
+                                 <li class="nav-item {{ Request::is('admin/stnk*') ? 'active' : '' }}">
                                     <a href="{{ route('stnk') }}">
                                         <span class="sub-item">Reminder STNK</span>
                                     </a>
                                 </li>
-                                 <li class="nav-item {{ Request::is('admin/asuransi*') ? ' active' : '' }}">
+                                 <li class="nav-item {{ Request::is('admin/asuransi*') ? 'active' : '' }}">
                                     <a href="{{ route('asuransi') }}">
                                         <span class="sub-item">Reminder Asuransi</span>
                                     </a>
@@ -256,32 +256,32 @@
 
         @yield('content')
 
-       <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    Agung Toyota JAMBI II
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> MEMBER OF </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Agung Concern </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2024, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="#">JB2IT</a>
+        <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+                <nav class="pull-left">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Agung Toyota JAMBI II
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"> MEMBER OF </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"> Agung Concern </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright">
+                    2024, made with <i class="fa fa-heart heart text-danger"></i> by
+                    <a href="#">JB2IT</a>
+                </div>
+                <div>
+                    Distributed by
+                    <a target="_blank" href="$">www.agungtoyota.co.id</a>.
+                </div>
             </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="$">www.agungtoyota.co.id</a>.
-            </div>
-          </div>
         </footer>
     </div>
 

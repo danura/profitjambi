@@ -204,7 +204,6 @@ class VehicleController extends Controller
             'fu_client_note'          => $request->fu_client_note,
         ]);
 
-
         echo json_encode('200');
     }
 
