@@ -21,9 +21,10 @@ class DashboardController extends Controller
         $customer_id = auth()->user()->customer_id;
         $nextMonth = today()->addMonth();
 
-        $banners =  DB::table('fleet_banner')->where('b_active','0')->get();
+        //$banners =  DB::table('fleet_banner')->where('b_active','0')->get();
 
         $units =  DB::table('fleet_vehicle')->where('fu_customer_id', $customer_id)->count();
+
         $services =  DB::table('fleet_vehicle')
             ->whereDate('fu_tgl_next_service', '<=', Carbon::today())
             ->where('fu_customer_id', $customer_id)->count();
@@ -36,8 +37,10 @@ class DashboardController extends Controller
             ->whereDate('fu_insurance_active', '<=', Carbon::today())
             ->where('fu_customer_id', $customer_id)->count();
 
-        return view('admin.dashboard.index', compact('banners', 'units', 'services', 'stnk', 'insurance'));
+        return view('admin.dashboard.index', compact('units', 'services', 'stnk', 'insurance'));
     }
+
+   
 
     public function getDataBannerID($id){
         $banners =  DB::table('fleet_banner')->where('b_id',$id)->first();

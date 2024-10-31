@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Pro-Fit AT Jambi II</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="{{ asset('public/assets/img/kaiadmin/favicon.ico')}}" type="image/x-icon"/>
+    <link rel="icon" href="{{ asset('public/assets/img/fav.png')}}" type="image/x-icon"/>
     <script src="{{ asset('public/assets/js/plugin/webfont/webfont.min.js')}}"></script>
     <script>
         WebFont.load({
@@ -91,8 +91,8 @@
                                         <span class="sub-item">Reminder Service</span>
                                     </a>
                                 </li>
-                                 <li class="nav-item">
-                                    <a href="components/avatars.html">
+                                 <li class="nav-item {{ Request::is('admin/stnk*') ? ' active' : '' }}">
+                                    <a href="{{ route('stnk') }}">
                                         <span class="sub-item">Reminder STNK</span>
                                     </a>
                                 </li>
@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom data-background-color="light-blue2"">
                 <div class="container-fluid">
                     <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"></nav>
                     <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
@@ -208,7 +208,7 @@
                             >
                                 <div class="avatar-sm">
                                     <img
-                                        src="{{ asset('public/assets/img/profile.jpg') }}"
+                                        src="{{ asset('public/assets/img/profile/')."/".auth()->user()->customer_image }}"
                                         alt="..."
                                         class="avatar-img rounded-circle"
                                     />

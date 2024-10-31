@@ -54,6 +54,28 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Cari Lokasi Kami</div>
+                  </div>
+                  <div class="card-body">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24885863.413500495!2d66.6800421!3d-1.6722323999999982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2586fe9eb9de1b%3A0x9ca6a8c825401af1!2sAgung%20Toyota%20Jambi%20Pall%2010!5e1!3m2!1sen!2sid!4v1730356762827!5m2!1sen!2sid"
+                      width="600"
+                      height="450"
+                      style="border: 0; width: 100%"
+                      allowfullscreen=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
         </div>
     </div>
 

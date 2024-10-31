@@ -8,7 +8,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Data Unit</h3>
+                <h3 class="fw-bold mb-3">Database Vehicle</h3>
                 
             </div>
             <div class="row">
@@ -27,15 +27,13 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <button type="button" id="ngserc" class="btn btn-danger mb-2 btn-block">
-                                        <i class="fas fa-search"></i> Display Data
-                                    </button>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" id="ngserc" class="btn btn-danger mb-2 btn-blk">
+                                            <i class="fas fa-search"></i> Display Data
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleSmallModal">
-                                        <i class="fas fa-car"></i> Tambah Unit
-                                    </button>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -44,23 +42,26 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                       
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title">Data Unit Terdaftar</h4>
+                                <button class="btn btn-primary btn-round ms-auto" data-bs-toggle="modal" data-bs-target="#exampleSmallModal">
+                                    <i class="fa fa-plus"></i>
+                                        Tambah Unit
+                                </button>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table
-                                    id="dataTable"
-                                    class="display datatable table table-striped table-hover table-bordered"
-                                >
+                                <table id="dataTable" 
+                                class="display table table-striped table-hover datatable table-head-bg-info ">
                                     <thead>
                                         <tr>
                                             <th>NO</th>
-                                            <th>NO-POL</th>
-                                            <th>MODEL</th>
-                                            <th>WARNA</th>
-                                            <th>BELI</th>
+                                            <th>UNIT</th>
                                             <th>STNK</th>
                                             <th>LAST SERVICE</th>
-                                            <th>ASURANSI EXPIRE</th>
+                                            <th>ASURANSI</th>
                                             <th>CLIENT</th>
 											<th>DETAIL</th>
                                         </tr>
@@ -258,10 +259,6 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-
-            
-           
-
             $('.datepicker').pickadate({
                 selectMonths: true,
                 selectYears: true,
@@ -417,8 +414,8 @@
                 lengthChange: true,
                 ordering:false,
                 "order": [[ 2, "ASC" ]],
-                bFilter: false,
-                bInfo: false,
+                bFilter: true,
+                bInfo: true,
 
                 ajax: {
                     url: "{{ route('listvehicle') }}",
@@ -434,9 +431,9 @@
                 columns: [
                     {data: 'DT_RowIndex',},
                     {data: 'norangka', name: 'norangka'},
-                    {data: 'model', name: 'model'},
-                    {data: 'warna', name: 'warna'},
-                    {data: 'tglbeli', name: 'tglbeli'},
+                    
+                   
+                    
                     {data: 'tglstnk', name: 'tglstnk'},
                     {data: 'tgllast', name: 'tgllast'},
                     {data: 'tglinsurance', name: 'tglinsurance'},

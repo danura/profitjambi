@@ -69,6 +69,7 @@ class VehicleController extends Controller
         $customer_id = auth()->user()->customer_id;
         $limit = $request->input('length');
         $start = $request->input('start');
+        ##$search = $request->input('search');
 
         $posts = vehicle::leftJoin('fleet_customer','fleet_vehicle.fu_customer_id','=','fleet_customer.cust_id')
             ->select(
@@ -79,8 +80,16 @@ class VehicleController extends Controller
                 )
         );
 
+       
+
         $posts = $posts->where('fleet_vehicle.fu_customer_id',$customer_id)
 						->where('fleet_vehicle.fu_active', '<>', '1'); //0=>ditampilkan, 1=>dihapus
+
+        if(!empty($request->input('search'))){
+            $search = $request->input('search');
+            $posts = $posts->where('fleet_vehicle.fu_no_pol', 'LIKE',"%{$search}%");
+
+        }
 
         if($request->input('unitmodel')!='') {
             $posts = $posts->where('fleet_vehicle.fu_model',$request->input('unitmodel'));
@@ -110,16 +119,27 @@ class VehicleController extends Controller
             $bginsurances = 'secondary';
             foreach ($posts as $post)
             {
-				$btnView = '<a class="btn btn-primary btn-sm" type="button" onclick="getDetailUnit('.$post->fu_id.')"><i class="fas fa-eye"></i> Detail</button>';
+				///$btnView = '<a class="btn btn-link btn-primary btn-lg" type="button" onclick="getDetailUnit('.$post->fu_id.')"><i class="fa fa-edit"></i></button>';
                 //$btnDel = '<a class="btn btn-danger btn-sm" type="button" onclick="hapusUnit('.$post->fu_id.')"><i class="fas fa-trash"></i> Hapus</button>';
 				///.'&nbsp;'.$btnDel
+
+                $btnView = '<div class="form-button-action">
+                                <a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'" data-bs-toggle="tooltip" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                  <i class="fa fa-edit"></i>
+                                </a>
+                                <a type="button" data-bs-toggle="tooltip" title="Detail Data" class="btn btn-link btn-info" data-original-title="Detail View" onclick="getDetailUnit('.$post->fu_id.')">
+                                  <i class="fa fa-car"></i>
+                                </a>
+                              </div>';
                 
 				$start++;
-                if($post->usiaunit >= 3) {
-                    $usiaunit = "<span class='badge bg-danger w-100'>".$post->fu_tgl_bp."<br>".$post->usiaunit." Tahun</span>";
+                ///<span class="badge rounded-pill badge-success">hired</span>
+                $usiaunit = "<code>Usia ".$post->usiaunit." Tahun</code>";
+                /*if($post->usiaunit >= 2) {
+                    $usiaunit = "<code>".$post->usiaunit." Tahun</code>";
                 } else {
-                    $usiaunit = "<span class='badge bg-secondary w-100'>".$post->fu_tgl_bp."</span>";
-                }
+                    $usiaunit = "";
+                }*/
 
                 $stnkdate  =  $this->CountOffmonth($post->fu_tgl_stnk);
 
@@ -138,14 +158,13 @@ class VehicleController extends Controller
                 
 
                 $nestedData['DT_RowIndex'] = $start;
-                $nestedData['norangka'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_no_rangka.'
-                <br><span class="badge bg-dark w-100">'.$post->fu_no_pol.'</span></a>';
-                $nestedData['model'] = '<a href="#" id="getDataCustId" data-id="'.$post->fu_no_rangka.'">'.$post->fu_model." - ".$post->fu_type."</a>";
-                $nestedData['warna'] = "<code>".$post->fu_color."</code>";
-                $nestedData['tglbeli'] =  $usiaunit;
-                $nestedData['tgllast'] = "<span class='badge bg-".$bgservice." w-100'>".$post->fu_tgl_last_service."</span>";
-                $nestedData['tglstnk'] = "<span class='badge bg-".$bgstnk." w-100'>".$post->fu_tgl_stnk."</span>";
-                $nestedData['tglinsurance'] = "<span class='badge bg-".$bginsurances." w-100'>".$post->fu_insurance_active."</span>";
+                $nestedData['norangka'] = '<b class="text-danger">'.$post->fu_model.'</b> - '.$post->fu_type.'<br><span class="badge rounded-pill bg-dark">'.$post->fu_no_pol.'</span>'.'<br>'.$usiaunit;
+                ///$nestedData['model'] = $post->fu_model;
+                ///////$nestedData['warna'] = "<code>".$post->fu_color."</code>";
+                ///$nestedData['tglbeli'] =  $usiaunit;
+                $nestedData['tgllast'] = "<span class='badge bg-".$bgservice." rounded-pill'>".$post->fu_tgl_last_service."</span>";
+                $nestedData['tglstnk'] = "<span class='badge bg-".$bgstnk." rounded-pill'>".$post->fu_tgl_stnk."</span>";
+                $nestedData['tglinsurance'] = "<span class='badge bg-".$bginsurances." rounded-pill'>".$post->fu_insurance_active."</span>";
 				$nestedData['action'] = $btnView;
                 $nestedData['client'] =  $post->fu_client;
                 ///client

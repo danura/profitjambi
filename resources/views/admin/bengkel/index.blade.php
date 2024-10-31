@@ -26,9 +26,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <button type="button" id="ngserc" class="btn btn-danger mb-2 btn-block">
-                                        <i class="fas fa-search"></i> Display Data
-                                    </button>
+                                    <div class="d-grid gap-2">
+                                        <button type="button" id="ngserc" class="btn btn-danger mb-2 btn-block">
+                                            <i class="fas fa-search"></i> Display Data
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +52,7 @@
                                             <th>WARNA</th>
                                             <th>LAST SERVICE</th>
                                             <th>NEXT SERVICE</th>
-											<th>ACT</th>
+											
                                         </tr>
                                     </thead>
                                 </table>
@@ -100,6 +102,19 @@
     <script type="text/javascript">
         $(document).ready(function() {
             LoadComboAllModel();
+
+             $.notify({
+                icon: 'icon-bell',
+                title: 'Info Service, +628117483800',
+                message: '<a href="https://wa.me/+628117483800" target="_blank">'+'Segera Hubungi MRA Kami Klik Disini</a>',
+            },{
+                type: 'secondary',
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                },
+                time: 1000,
+            });
 		
 			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $("#frmsyncdata").submit(function(e){
@@ -207,11 +222,10 @@
                     {data: 'warna', name: 'warna'},
                     {data: 'lastservice', name: 'lastservice'},
                     {data: 'nextservice', name: 'nextservice'},
-                    {data: 'action', name: 'action'},
                 ]
             });
-            
         }
+
 
         $('#ngserc').click(function(e){
             dataTable.draw();

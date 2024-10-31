@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="{{ asset('public/assets/img/shop-2.png') }}" type="image/x-icon">
-    <title>{{ $title ?? config('app.name') }} - Admin</title>
+    <title>PRO-FIT AT JBI2 - LOGIN</title>
     <!-- Custom fonts for this template-->
     <link href="{{ asset('public/assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link

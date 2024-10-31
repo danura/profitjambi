@@ -156,13 +156,21 @@
 										<thead>
 											<tr>
 												<th><div align="center">NO</div></th>
-												<th><div align="center">MODEL</div></th>
-												<th><div align="center">TYPE</div></th>
-												<th><div align="center">TAHUN</div></th>
 												<th><div align="center">HARGA</div></th>
+												<th><div align="center">TANGGAL</div></th>
+												<th><div align="center">LOKASI</div></th>
+												<th><div align="center">APPRAISE BY</div></th>
 											</tr>
 										</thead>
-										<tbody></tbody>
+										<tbody>
+											<tr>
+												<th><div align="center">1</div></th>
+												<th><div align="center">{{ number_format($row->fu_appraise_price,0,",",".") }} </div></th>
+												<th><div align="center">{{$row->fu_appraise_date}}</div></th>
+												<th><div align="center">{{$row->fu_appraise_location}}</div></th>
+												<th><div align="center">{{$row->fu_appraise_by}}</div></th>
+											</tr>
+										</tbody>
 									</table>	
 								</div>
 							</div>
@@ -192,7 +200,7 @@
 	
 	
 	hist_service();
-	getDataAppraisePrice();
+
 	
  });
  

@@ -43,6 +43,8 @@ class GeneralServiceController extends Controller
         $posts = $posts->where('fleet_vehicle.fu_customer_id',$customer_id)
 						->where('fleet_vehicle.fu_active', '<>', '1');
 
+         $posts = $posts->whereDate('fleet_vehicle.fu_tgl_next_service', '<=', Carbon::today());
+
         if($request->input('unitmodel')!='') {
             $posts = $posts->where('fleet_vehicle.fu_model',$request->input('unitmodel'));
         }
@@ -79,14 +81,14 @@ class GeneralServiceController extends Controller
 				
 				$start++;
                 $nestedData['DT_RowIndex'] = $start;
-                $nestedData['norangka'] = '<a href="#" onclick="getDetailUnit('.$post->fu_id.')">'.$post->fu_no_rangka.'
+                $nestedData['norangka'] = '<a href="https://wa.me/+628117483800?text=Hi%2C%20I%20would%20like%20to%20book%20a%20service%20for%20vehicle%20with%20ID%20" target="_blank">'.$post->fu_no_rangka.'
                 <br><span class="badge bg-dark w-100">'.$post->fu_no_pol.'</span></a>';
-                $nestedData['model'] = '<a href="#"onclick="getDetailUnit('.$post->fu_id.')">'.$post->fu_model." - ".$post->fu_type.'</a>';
+                $nestedData['model'] = '<a href="https://wa.me/+628117483800" target="_blank">'.$post->fu_model." - ".$post->fu_type.'</a>';
                 $nestedData['warna'] = $post->fu_color;
 
                 $nestedData['lastservice'] = $post->fu_tgl_last_service;
                 $nestedData['nextservice'] = "<span class='badge bg-".$bgservice." w-100'>".$post->fu_tgl_next_service."</span>";
-                $nestedData['action'] = '<button type="button" class="btn btn-sm btn-primary" onclick="syncData(\''.$post->fu_no_rangka.'\')"><i class="fas fa-sync"></i> Sinkron Data </button>';
+               //// $nestedData['action'] = '<button type="button" class="btn btn-sm btn-primary" onclick="syncData(\''.$post->fu_no_rangka.'\')"><i class="fas fa-sync"></i> Sinkron Data </button>';
                 
                 $data[] = $nestedData;
             }

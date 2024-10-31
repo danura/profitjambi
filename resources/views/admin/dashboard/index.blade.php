@@ -1,6 +1,13 @@
 @extends('layouts.app', ['title' => 'Dashboard'])
 
 @section('content')
+
+    <?php 
+        $percent_service  = ($services / $units) * 100;
+        $percent_stnk = ($stnk / $units ) * 100;
+        $percent_insu = ($insurance / $units ) * 100;
+
+    ?>
     <link href="{{ asset('public/assets/vendor/fullcalendar/css/main.min.css') }}" rel="stylesheet" />
     <style>
         .fc-toolbar .fc-button {
@@ -54,7 +61,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">Need Service</p>
-                                        <h4 class="card-title">{{ $services }}</h4>
+                                        <h4 class="card-title">{{ $services }}  | <small class="text-danger">{{  number_format($percent_service,0,",",".") }}%</small></h4>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +80,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">STNK Expire</p>
-                                        <h4 class="card-title">{{ $stnk }}</h4>
+                                        <h4 class="card-title">{{ $stnk }} |  <small class="text-danger">{{  number_format($percent_stnk,0,",",".") }}%</small></h4>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +99,7 @@
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
                                         <p class="card-category">Insurance </p>
-                                        <h4 class="card-title">{{ $insurance }}</h4>
+                                        <h4 class="card-title">{{ $insurance }} |  <small class="text-danger">{{  number_format($percent_insu,0,",",".") }}%</small></h4>
                                     </div>
                                 </div>
                             </div>
@@ -117,32 +124,64 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">PROMO TOYOTA</div>
+                            <div class="card-title">UNIT STNK EXPIRED</div>
                         </div>
                         <div class="card-body pb-0">
 
-                            @foreach($banners as $banner)
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <img src="{{ asset('public/assets/img/cart.png') }}" alt="{{ $banner->b_header }}" class="avatar-img rounded-circle">
-                                    </div>
-                                    <a href="#" id="getDataIklanId" data-id="{{ $banner->b_id }}">
-                                        <div class="flex-1 pt-1 ms-2">
-                                            <h6 class="fw-bold mb-1">{{ $banner->b_header }}</h6>
-                                            <small class="text-muted">{{ $banner->b_desc }}</small>
-                                        </div>
-                                    </a>
-                                
-                                </div>
-                                <div class="separator-dashed"></div>
-                            @endforeach
+                           
+                          
+                            <ul class="demo2 list-group" >
+                                <li class="news-item list-group-item">LIST DATA UNIT </li>
+                                <li class="news-item list-group-item">STNK EXPIRED</li>
+                                <li class="news-item list-group-item">~SEGERA LAKUKAN PERPANJANGAN~</li>
+                            </ul>
 
                         </div>
                     </div>
                 </div>
             </div>
 
-            
+            <div class="row row-card-no-pd">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">PROMO TOYOTA</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('public/assets/img/promo/BP1.PNG') }}" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('public/assets/img/promo/BP2.PNG') }}" class="d-block w-100" alt="...">
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div id="carouselExampleSlidesOnlyx" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('public/assets/img/promo/GR1.PNG') }}" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('public/assets/img/promo/GR2.PNG') }}" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('public/assets/img/promo/GR3.PNG') }}" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+
         </div>
     </div>
 
@@ -220,10 +259,23 @@
         </div>
     </div>
             
-
+    <script src="{{ asset('public/assets/vendor/ticker/scripts/jquery.bootstrap.newsbox.js') }}" type="text/javascript"></script>
     <script src="{{ asset('public/assets/vendor/fullcalendar/js/main.min.js') }}"></script>
 
     <script>
+        $(function () {
+            $(".demo2").bootstrapNews({
+                newsPerPage: 5,
+                autoplay: true,
+                pauseOnHover: true,
+                navigation: false,
+                direction: 'up',
+                newsTickerInterval: 1500,
+                onToDo: function () {
+                //console.log(this);
+                }
+            });
+        });
 
         $('#ngserc').click(function(e){
             RenderCalendar();
@@ -245,6 +297,7 @@
             });
 
             RenderCalendar();
+            LoadThisStnkExpire();
         });
 
         function RenderCalendar() {
@@ -314,27 +367,18 @@
 
 			});
 
-         calendar.render();
+            calendar.render();
 		}
 
-        $('body').on('click', '#getDataIklanId', function(e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            $("#headerid").empty();
-            $(".img-status").empty();
-            $.ajax({
-                url: "{{ URL('/admin/get-banner/') }}/"+id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data){
-                    $("#headerid").append(data.b_header.toUpperCase());
-                    var source = "{!! asset('public/assets/img/promo/') !!}/"+data.b_image;
-                    $('.img-status').attr('src', source);
-
-                }
+        function LoadThisStnkExpire(){
+            $.getJSON("{{ URL('/admin/stnk/listexpire/') }}/", function(result){
+                $.each(result,function(i, rows){
+                    $('.demo2').append('<li class="list-group-item list-group-item-danger"><b>'+rows.fu_no_pol+'</b> - '+rows.fu_model+'</li>');
+                });
             });
+        }
 
-            $('#IklanModalData').modal('show');
-        });
+       
+        
     </script>
 @endsection

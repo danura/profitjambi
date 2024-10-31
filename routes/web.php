@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/vehicle/historysvc', [App\Http\Controllers\Admin\VehicleController::class, 'listHistService'])->name('histservice');
         Route::post('/vehicle/hapus/', [App\Http\Controllers\Admin\VehicleController::class, 'hapusdata'])->name('deletevehicle');
 
+        
 
         Route::post('/secondprice/list', [App\Http\Controllers\Admin\VehicleController::class, 'listAppraise'])->name('listAppraise');
 
@@ -48,5 +49,8 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/asuransi', [App\Http\Controllers\Admin\AsuransiController::class, 'index'])->name('asuransi');
         Route::post('/asuransi/list', [App\Http\Controllers\Admin\AsuransiController::class, 'listdata'])->name('listasuransi');
+    
+        Route::get('/stnk', [App\Http\Controllers\Admin\STNKController::class, 'index'])->name('stnk');
+        Route::get('/stnk/listexpire', [App\Http\Controllers\Admin\STNKController::class, 'listexpire']);
     });
 });
